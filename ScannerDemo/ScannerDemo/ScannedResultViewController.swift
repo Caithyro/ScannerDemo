@@ -28,7 +28,7 @@ class ScannedResultViewController: UIViewController {
         if grayscaleButtonPressed == false {
             setGrayscaleImage()
         } else {
-            setOriginalImage(whatButtonHasBeenPressed: 1)
+            setOriginalImage(whatButtonHasBeenPressed: 0)
         }
         
     }
@@ -38,7 +38,7 @@ class ScannedResultViewController: UIViewController {
         if whiteAndBlackButtonPressed == false {
             setPixelatedImage()
         } else {
-            setOriginalImage(whatButtonHasBeenPressed: 2)
+            setOriginalImage(whatButtonHasBeenPressed: 1)
         }
     }
     
@@ -46,7 +46,7 @@ class ScannedResultViewController: UIViewController {
     
     private func setGrayscaleImage() {
         
-        let grayImage = OpenCVWrapper.toGray(capturedImage!)
+        let grayImage = OpenCVWrapper.toGray(mainImageView.image!)
         mainImageView.image = grayImage
         grayscaleButtonPressed = true
         grayscaleButton.setImage(UIImage(named: "grayscalePressed"),
@@ -55,8 +55,8 @@ class ScannedResultViewController: UIViewController {
     
     private func setPixelatedImage() {
         
+        let targetImage = mainImageView.image!
         let filter = Pixellate()
-        let targetImage = capturedImage!
         let filteredImage = targetImage.filterWithOperation(filter)
         mainImageView.image = filteredImage
         whiteAndBlackButtonPressed = true
@@ -66,7 +66,7 @@ class ScannedResultViewController: UIViewController {
     
     private func setOriginalImage(whatButtonHasBeenPressed: Int) {
         
-        if whatButtonHasBeenPressed == 1 {
+        if whatButtonHasBeenPressed == 0 {
             grayscaleButtonPressed = false
             grayscaleButton.setImage(UIImage(named: "grayscaleNormal"),
                                      for: .normal)
